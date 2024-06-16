@@ -150,7 +150,6 @@ fun OnboardingPager(
                     )
 
                 }
-
             }
         }
     }
