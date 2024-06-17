@@ -5,18 +5,17 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
-import com.carlostorres.apphabits.onboarding.presentation.OnboardingScreen
+import com.carlostorres.apphabits.onboarding.ui.OnboardingScreen
 
 @Composable
 fun NavManager(
     navController: NavHostController,
-    startDestination: String
+    startDestination: NavRoutes
 ){
 
     NavHost(
         navController = navController,
-        startDestination = startDestination
+        startDestination = startDestination.route
     ){
 
         composable(NavRoutes.Onboarding.route){
@@ -24,9 +23,17 @@ fun NavManager(
             //Onboarding
             OnboardingScreen(
                 onFinish = {
-                    println("Termino onboarding")
+                    navController.popBackStack()
+                    navController.navigate(NavRoutes.Login.route)
                 }
             )
+
+        }
+
+        composable(NavRoutes.Login.route){
+
+            //Onboarding
+            Text("Login")
 
         }
 

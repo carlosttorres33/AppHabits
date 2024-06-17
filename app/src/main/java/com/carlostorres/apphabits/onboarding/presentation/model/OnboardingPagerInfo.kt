@@ -1,4 +1,4 @@
-package com.carlostorres.apphabits.onboarding.presentation
+package com.carlostorres.apphabits.onboarding.presentation.model
 
 import androidx.annotation.DrawableRes
 

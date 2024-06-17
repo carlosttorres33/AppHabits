@@ -1,4 +1,4 @@
-package com.carlostorres.apphabits.onboarding.presentation.components
+package com.carlostorres.apphabits.onboarding.ui.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -27,7 +27,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.carlostorres.apphabits.core.presentation.HabitButton
 import com.carlostorres.apphabits.core.presentation.HabitTitle
-import com.carlostorres.apphabits.onboarding.presentation.OnboardingPagerInfo
+import com.carlostorres.apphabits.onboarding.presentation.model.OnboardingPagerInfo
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.HorizontalPagerIndicator
