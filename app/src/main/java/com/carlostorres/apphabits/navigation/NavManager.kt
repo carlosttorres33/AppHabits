@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.carlostorres.apphabits.authentication.ui.login.LoginScreen
 import com.carlostorres.apphabits.onboarding.ui.OnboardingScreen
 
 @Composable
@@ -18,9 +19,9 @@ fun NavManager(
         startDestination = startDestination.route
     ){
 
+        //region Onboarding
         composable(NavRoutes.Onboarding.route){
 
-            //Onboarding
             OnboardingScreen(
                 onFinish = {
                     navController.popBackStack()
@@ -29,13 +30,16 @@ fun NavManager(
             )
 
         }
+        //endregion
 
+        //region Login
         composable(NavRoutes.Login.route){
 
-            //Onboarding
-            Text("Login")
+            //Login
+            LoginScreen()
 
         }
+        //endregion
 
     }
 

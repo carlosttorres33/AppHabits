@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 fun HabitButton(
     text : String,
     modifier : Modifier = Modifier,
+    isEnabled : Boolean = true,
     onClick : () -> Unit
 ){
 
@@ -23,7 +24,8 @@ fun HabitButton(
             onClick()
         },
         modifier = modifier,
-        shape = RoundedCornerShape(8.dp)
+        shape = RoundedCornerShape(8.dp),
+        enabled = isEnabled
     ){
 
         Text(
