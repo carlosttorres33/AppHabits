@@ -17,9 +17,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.carlostorres.apphabits.core.HabitPasswordTextfield
 import com.carlostorres.apphabits.core.HabitTextfield
 import com.carlostorres.apphabits.core.presentation.HabitButton
 
@@ -46,7 +53,7 @@ fun LoginForm(
         )
 
         Divider(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp),
             color = MaterialTheme.colorScheme.background
         )
 
@@ -73,7 +80,7 @@ fun LoginForm(
             isEnabled = true
         )
 
-        HabitTextfield(
+        HabitPasswordTextfield(
             value = "Password",
             onValueChange = {
 
@@ -99,17 +106,43 @@ fun LoginForm(
             text = "Login",
             modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp),
             isEnabled = true
-        ){
-
+        ) {
+            //
         }
 
         TextButton(
             onClick = {
-
+                //
             }
-        ){
-            Text(text = "Forgot Password")
+        ) {
+            Text(
+                text = "Forgot Password?",
+                color = MaterialTheme.colorScheme.tertiary
+            )
+        }
+
+        TextButton(
+            onClick = {
+                //
+            }
+        ) {
+            Text(
+                text = buildAnnotatedString {
+                    append("Don't have an account?")
+                    withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
+                        append(" Sign Up")
+                    }
+                },
+                color = MaterialTheme.colorScheme.tertiary,
+                textDecoration = TextDecoration.Underline
+            )
         }
 
     }
+}
+
+@Preview
+@Composable
+fun LFP(){
+    LoginForm()
 }
