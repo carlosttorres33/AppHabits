@@ -20,14 +20,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.carlostorres.apphabits.R
 import com.carlostorres.apphabits.authentication.ui.login.components.LoginForm
 import com.carlostorres.apphabits.core.presentation.HabitTitle
 
 @Composable
 fun LoginScreen(
-
+    viewModel: LoginViewModel = hiltViewModel()
 ) {
+
+    val state = viewModel.state
 
     Box(
         modifier = Modifier
@@ -75,7 +78,10 @@ fun LoginScreen(
                 HabitTitle(title = "monumental habits")
             }
 
-            LoginForm()
+            LoginForm(
+                state = state,
+                onEvent = viewModel::onEvent
+            )
 
         }
 

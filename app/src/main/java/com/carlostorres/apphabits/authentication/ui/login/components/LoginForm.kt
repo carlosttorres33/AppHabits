@@ -16,7 +16,9 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
@@ -26,14 +28,20 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.carlostorres.apphabits.authentication.ui.login.LoginEvent
+import com.carlostorres.apphabits.authentication.ui.login.LoginState
 import com.carlostorres.apphabits.core.HabitPasswordTextfield
 import com.carlostorres.apphabits.core.HabitTextfield
 import com.carlostorres.apphabits.core.presentation.HabitButton
 
 @Composable
 fun LoginForm(
+    state : LoginState,
+    onEvent : (LoginEvent) -> Unit,
     modifier: Modifier = Modifier
 ) {
+
+    val focusManager = LocalFocusManager.current
 
     Column(
         modifier = modifier
@@ -58,9 +66,9 @@ fun LoginForm(
         )
 
         HabitTextfield(
-            value = "Email",
+            value = state.email,
             onValueChange = {
-
+                onEvent(LoginEvent.onEmailChange(it))
             },
             placeholder = "Email",
             contentDescription = "Enter Email",
@@ -73,22 +81,22 @@ fun LoginForm(
             ),
             keyboardActions = KeyboardActions(
                 onAny = {
-                    //TODO
+                    focusManager.moveFocus(FocusDirection.Next)
                 }
             ),
-            errorMessage = null,
-            isEnabled = true
+            errorMessage = state.emailError,
+            isEnabled = !state.isLoading
         )
 
         HabitPasswordTextfield(
-            value = "Password",
+            value = state.password,
             onValueChange = {
-
+                onEvent(LoginEvent.onPasswordChange(it))
             },
             contentDescription = "Enter Password",
             modifier = Modifier.fillMaxWidth().padding(bottom = 6.dp).padding(horizontal = 20.dp),
-            errorMessage = null,
-            isEnabled = true,
+            errorMessage = state.passwordError,
+            isEnabled = !state.isLoading,
             placeholder = "Password",
             keyboardOptions = KeyboardOptions(
                 autoCorrect = false,
@@ -97,7 +105,8 @@ fun LoginForm(
             ),
             keyboardActions = KeyboardActions(
                 onAny = {
-                    //TODO
+                    focusManager.clearFocus()
+                    onEvent(LoginEvent.onLogin)
                 }
             )
         )
@@ -105,14 +114,14 @@ fun LoginForm(
         HabitButton(
             text = "Login",
             modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp),
-            isEnabled = true
+            isEnabled = !state.isLoading
         ) {
-            //
+            onEvent(LoginEvent.onLogin)
         }
 
         TextButton(
             onClick = {
-                //
+                onEvent(LoginEvent.onSignUp)
             }
         ) {
             Text(
@@ -139,10 +148,4 @@ fun LoginForm(
         }
 
     }
-}
-
-@Preview
-@Composable
-fun LFP(){
-    LoginForm()
 }
