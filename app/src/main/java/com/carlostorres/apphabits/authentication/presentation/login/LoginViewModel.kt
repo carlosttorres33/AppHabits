@@ -1,11 +1,10 @@
-package com.carlostorres.apphabits.authentication.ui.login
+package com.carlostorres.apphabits.authentication.presentation.login
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.carlostorres.apphabits.authentication.domain.repository.AuthenticationRepo
 import com.carlostorres.apphabits.authentication.domain.usecases.LoginUseCases
 import com.carlostorres.apphabits.authentication.domain.usecases.PasswordResult
 import dagger.hilt.android.lifecycle.HiltViewModel

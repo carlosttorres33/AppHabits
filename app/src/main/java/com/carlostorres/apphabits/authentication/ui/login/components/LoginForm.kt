@@ -10,7 +10,6 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Email
-import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
@@ -29,10 +28,9 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.carlostorres.apphabits.authentication.ui.login.LoginEvent
-import com.carlostorres.apphabits.authentication.ui.login.LoginState
+import com.carlostorres.apphabits.authentication.presentation.login.LoginEvent
+import com.carlostorres.apphabits.authentication.presentation.login.LoginState
 import com.carlostorres.apphabits.core.HabitPasswordTextfield
 import com.carlostorres.apphabits.core.HabitTextfield
 import com.carlostorres.apphabits.core.presentation.HabitButton

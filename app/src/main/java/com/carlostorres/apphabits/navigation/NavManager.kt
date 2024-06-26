@@ -6,6 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.carlostorres.apphabits.authentication.ui.login.LoginScreen
+import com.carlostorres.apphabits.authentication.ui.signup.SignUpScreen
 import com.carlostorres.apphabits.onboarding.ui.OnboardingScreen
 
 @Composable
@@ -62,7 +63,7 @@ fun NavManager(
         composable(NavRoutes.SignUp.route){
 
             //SignUp
-            Text(text = "SignUp Screen")
+            SignUpScreen()
 
         }
         //endregion

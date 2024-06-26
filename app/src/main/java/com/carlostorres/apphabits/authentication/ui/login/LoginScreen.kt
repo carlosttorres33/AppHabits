@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 
-import androidx.compose.material.SnackbarDefaults.backgroundColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -23,6 +22,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.carlostorres.apphabits.R
+import com.carlostorres.apphabits.authentication.presentation.login.LoginViewModel
 import com.carlostorres.apphabits.authentication.ui.login.components.LoginForm
 import com.carlostorres.apphabits.core.presentation.HabitTitle
 

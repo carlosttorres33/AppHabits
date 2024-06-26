@@ -1,4 +1,4 @@
-package com.carlostorres.apphabits.authentication.ui.login
+package com.carlostorres.apphabits.authentication.presentation.login
 
 data class LoginState(
     val email : String = "",
