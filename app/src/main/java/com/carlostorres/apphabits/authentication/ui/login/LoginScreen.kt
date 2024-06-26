@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.SnackbarDefaults.backgroundColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -27,10 +28,24 @@ import com.carlostorres.apphabits.core.presentation.HabitTitle
 
 @Composable
 fun LoginScreen(
+    onLogin : () -> Unit,
+    onSignUp : () -> Unit,
     viewModel: LoginViewModel = hiltViewModel()
 ) {
 
     val state = viewModel.state
+
+    LaunchedEffect(state.isLoggedIn){
+        if (state.isLoggedIn){
+            onLogin()
+        }
+    }
+
+    LaunchedEffect(state.signUp){
+        if (state.signUp){
+            onSignUp()
+        }
+    }
 
     Box(
         modifier = Modifier

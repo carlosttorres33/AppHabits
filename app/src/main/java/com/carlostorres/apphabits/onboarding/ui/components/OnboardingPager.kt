@@ -1,5 +1,7 @@
 package com.carlostorres.apphabits.onboarding.ui.components
 
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -16,7 +18,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -95,61 +101,68 @@ fun OnboardingPager(
             }
         }
 
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .align(Alignment.BottomCenter)
-                .padding(bottom = 64.dp, start = 16.dp, end = 16.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
+        AnimatedContent(
+            targetState = pagerState.currentPage == pages.lastIndex,
+            modifier = Modifier.fillMaxWidth().align(Alignment.BottomCenter)
         ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.BottomCenter)
+                    .padding(bottom = 64.dp, start = 16.dp, end = 16.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
 
-            if (pagerState.currentPage == pages.lastIndex) {
-
-                HabitButton(
-                    text = "Get Started",
-                    modifier = Modifier.fillMaxWidth()
-                ){
-                    onFinish()
-                }
-
-            } else {
-
-                TextButton(
-                    onClick = {
-                        coroutineScope.launch {
-                            pagerState.animateScrollToPage(pages.lastIndex)
+                when (it) {
+                    true -> {
+                        HabitButton(
+                            text = "Get Started",
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            onFinish()
                         }
                     }
-                ) {
 
-                    Text(
-                        text = "Skip",
-                        color = MaterialTheme.colorScheme.tertiary
-                    )
+                    false -> {
+                        TextButton(
+                            onClick = {
+                                coroutineScope.launch {
+                                    pagerState.animateScrollToPage(pages.lastIndex)
+                                }
+                            }
+                        ) {
 
-                }
+                            Text(
+                                text = "Skip",
+                                color = MaterialTheme.colorScheme.tertiary
+                            )
 
-                HorizontalPagerIndicator(
-                    pagerState = pagerState,
-                    activeColor = MaterialTheme.colorScheme.primary,
-                    inactiveColor = MaterialTheme.colorScheme.tertiary
-                )
+                        }
 
-                TextButton(
-                    onClick = {
-                        coroutineScope.launch {
-                            pagerState.animateScrollToPage(pagerState.currentPage + 1)
+                        HorizontalPagerIndicator(
+                            pagerState = pagerState,
+                            activeColor = MaterialTheme.colorScheme.primary,
+                            inactiveColor = MaterialTheme.colorScheme.tertiary
+                        )
+
+                        TextButton(
+                            onClick = {
+                                coroutineScope.launch {
+                                    pagerState.animateScrollToPage(pagerState.currentPage + 1)
+                                }
+                            }
+                        ) {
+
+                            Text(
+                                text = "Next",
+                                color = MaterialTheme.colorScheme.tertiary
+                            )
+
                         }
                     }
-                ) {
-
-                    Text(
-                        text = "Next",
-                        color = MaterialTheme.colorScheme.tertiary
-                    )
-
                 }
+
             }
         }
     }

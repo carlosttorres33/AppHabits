@@ -36,7 +36,33 @@ fun NavManager(
         composable(NavRoutes.Login.route){
 
             //Login
-            LoginScreen()
+            LoginScreen(
+                onLogin = {
+                    navController.popBackStack()
+                    navController.navigate(NavRoutes.Home.route)
+                },
+                onSignUp = {
+                    navController.navigate(NavRoutes.SignUp.route)
+                }
+            )
+
+        }
+        //endregion
+
+        // region Home
+        composable(NavRoutes.Home.route){
+
+            //Home
+            Text(text = "Home Screen")
+
+        }
+        //endregion
+
+        // region SignUp
+        composable(NavRoutes.SignUp.route){
+
+            //SignUp
+            Text(text = "SignUp Screen")
 
         }
         //endregion
