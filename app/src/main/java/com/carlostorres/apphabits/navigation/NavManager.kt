@@ -63,7 +63,18 @@ fun NavManager(
         composable(NavRoutes.SignUp.route){
 
             //SignUp
-            SignUpScreen()
+            SignUpScreen(
+                onSignedIn = {
+                    navController.navigate(NavRoutes.Home.route){
+                        popUpTo(navController.graph.id){
+                            inclusive = true
+                        }
+                    }
+                },
+                onLogin = {
+                    navController.popBackStack()
+                }
+            )
 
         }
         //endregion

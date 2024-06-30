@@ -39,6 +39,7 @@ import com.carlostorres.apphabits.core.presentation.HabitButton
 fun LoginForm(
     state: LoginState,
     onEvent: (LoginEvent) -> Unit,
+    onSignUp: () -> Unit,
     modifier: Modifier = Modifier
 ) {
 
@@ -129,7 +130,7 @@ fun LoginForm(
 
             TextButton(
                 onClick = {
-                    onEvent(LoginEvent.onSignUp)
+                    //
                 }
             ) {
                 Text(
@@ -140,7 +141,7 @@ fun LoginForm(
 
             TextButton(
                 onClick = {
-                    onEvent(LoginEvent.onSignUp)
+                    onSignUp()
                 }
             ) {
                 Text(

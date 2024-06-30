@@ -6,6 +6,8 @@ import com.carlostorres.apphabits.authentication.domain.matcher.EmailMatcher
 import com.carlostorres.apphabits.authentication.domain.repository.AuthenticationRepo
 import com.carlostorres.apphabits.authentication.domain.usecases.LoginUseCases
 import com.carlostorres.apphabits.authentication.domain.usecases.LoginWithEmailUseCase
+import com.carlostorres.apphabits.authentication.domain.usecases.SignUpUseCases
+import com.carlostorres.apphabits.authentication.domain.usecases.SignUpWithEmailUseCase
 import com.carlostorres.apphabits.authentication.domain.usecases.ValidateEmailUseCase
 import com.carlostorres.apphabits.authentication.domain.usecases.ValidatePasswordUseCase
 import dagger.Module
@@ -31,6 +33,16 @@ object AuthModule {
      fun provideLoginUseCases(repo: AuthenticationRepo, emailMatcher: EmailMatcher) : LoginUseCases{
          return LoginUseCases(
              loginWithEmailUseCase = LoginWithEmailUseCase(repo),
+             validateEmailUseCase = ValidateEmailUseCase(emailMatcher),
+             validatePasswordUseCase = ValidatePasswordUseCase()
+         )
+     }
+
+     @Singleton
+     @Provides
+     fun provideSignUpUseCases(repo: AuthenticationRepo, emailMatcher: EmailMatcher) : SignUpUseCases{
+         return SignUpUseCases(
+             signUpWithEmailUseCase = SignUpWithEmailUseCase(repo),
              validateEmailUseCase = ValidateEmailUseCase(emailMatcher),
              validatePasswordUseCase = ValidatePasswordUseCase()
          )

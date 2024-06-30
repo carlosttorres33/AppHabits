@@ -25,7 +25,6 @@ class LoginViewModel @Inject constructor(
             is LoginEvent.onEmailChange -> state = state.copy(email = event.email)
             LoginEvent.onLogin -> login()
             is LoginEvent.onPasswordChange -> state = state.copy(password = event.password)
-            LoginEvent.onSignUp -> state = state.copy(signUp = true)
         }
 
     }
