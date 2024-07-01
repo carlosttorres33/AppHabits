@@ -1,4 +1,4 @@
-package com.carlostorres.apphabits.navigation
+package com.carlostorres.apphabits.ui.navigation
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.carlostorres.apphabits.authentication.ui.login.LoginScreen
 import com.carlostorres.apphabits.authentication.ui.signup.SignUpScreen
+import com.carlostorres.apphabits.home.ui.HomeScreen
 import com.carlostorres.apphabits.onboarding.ui.OnboardingScreen
 
 @Composable
@@ -54,7 +55,7 @@ fun NavManager(
         composable(NavRoutes.Home.route){
 
             //Home
-            Text(text = "Home Screen")
+            HomeScreen()
 
         }
         //endregion

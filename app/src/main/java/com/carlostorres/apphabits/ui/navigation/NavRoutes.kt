@@ -1,4 +1,4 @@
-package com.carlostorres.apphabits.navigation
+package com.carlostorres.apphabits.ui.navigation
 
 sealed class NavRoutes (val route : String) {
 

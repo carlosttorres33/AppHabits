@@ -9,8 +9,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
-import com.carlostorres.apphabits.navigation.NavManager
-import com.carlostorres.apphabits.navigation.NavRoutes
+import com.carlostorres.apphabits.ui.navigation.NavManager
+import com.carlostorres.apphabits.ui.navigation.NavRoutes
 import com.carlostorres.apphabits.ui.theme.AppHabitsTheme
 import dagger.hilt.android.AndroidEntryPoint
 
