@@ -6,6 +6,7 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
 
 class AuthenticationRepoImpl : AuthenticationRepo {
+
     override suspend fun login(email: String, password: String): Result<Unit> {
         return try {
             Firebase.auth.signInWithEmailAndPassword(email, password).await()
@@ -23,4 +24,9 @@ class AuthenticationRepoImpl : AuthenticationRepo {
             Result.failure(e)
         }
     }
+
+    override fun getUserId(): String? {
+        return Firebase.auth.currentUser?.uid
+    }
+
 }

@@ -46,6 +46,9 @@ class MainActivity : ComponentActivity() {
 
     private fun getStartDestination() : NavRoutes {
 
+        if(viewModel.isLoggedIn){
+            return NavRoutes.Home
+        }
         return if (viewModel.hasSeenOnboarding){
             NavRoutes.Login
         }else{
