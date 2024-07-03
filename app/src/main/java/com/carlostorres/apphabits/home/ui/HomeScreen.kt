@@ -76,7 +76,7 @@ fun HomeScreen(
             ) {
 
                 Text(
-                    text = "Habits".uppercase(),
+                    text = "HABITS".uppercase(),
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.tertiary,
