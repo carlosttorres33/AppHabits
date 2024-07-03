@@ -1,4 +1,4 @@
-package com.carlostorres.apphabits.home.ui
+package com.carlostorres.apphabits.home.ui.home
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -10,9 +10,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -26,16 +28,18 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.carlostorres.apphabits.R
-import com.carlostorres.apphabits.home.presentation.HomeEvents
-import com.carlostorres.apphabits.home.presentation.HomeViewModel
-import com.carlostorres.apphabits.home.ui.components.HomeDateSelecter
-import com.carlostorres.apphabits.home.ui.components.HomeHabit
-import com.carlostorres.apphabits.home.ui.components.HomeQuote
+import com.carlostorres.apphabits.home.presentation.home.HomeEvents
+import com.carlostorres.apphabits.home.presentation.home.HomeViewModel
+import com.carlostorres.apphabits.home.ui.home.components.HomeDateSelecter
+import com.carlostorres.apphabits.home.ui.home.components.HomeHabit
+import com.carlostorres.apphabits.home.ui.home.components.HomeQuote
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
-    viewModel: HomeViewModel = hiltViewModel()
+    viewModel: HomeViewModel = hiltViewModel(),
+    onNewHabit : () -> Unit,
+    onSettings : () -> Unit,
 ) {
 
     val state = viewModel.state
@@ -50,7 +54,9 @@ fun HomeScreen(
                 },
                 navigationIcon = {
                     IconButton(
-                        onClick = {}
+                        onClick = {
+                            onSettings()
+                        }
                     ) {
                         Icon(
                             imageVector = Icons.Default.Settings,
@@ -60,6 +66,15 @@ fun HomeScreen(
                 },
                 actions = {}
             )
+        },
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = {
+                    onNewHabit()
+                }
+            ) {
+                Icon(imageVector = Icons.Default.Add, contentDescription = "Create new habit")
+            }
         }
     ) { paddingValues ->
 

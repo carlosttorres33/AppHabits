@@ -1,13 +1,13 @@
 package com.carlostorres.apphabits.ui.navigation
 
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.carlostorres.apphabits.authentication.ui.login.LoginScreen
 import com.carlostorres.apphabits.authentication.ui.signup.SignUpScreen
-import com.carlostorres.apphabits.home.ui.HomeScreen
+import com.carlostorres.apphabits.home.ui.detail.DetailScreen
+import com.carlostorres.apphabits.home.ui.home.HomeScreen
 import com.carlostorres.apphabits.onboarding.ui.OnboardingScreen
 
 @Composable
@@ -55,7 +55,14 @@ fun NavManager(
         composable(NavRoutes.Home.route){
 
             //Home
-            HomeScreen()
+            HomeScreen(
+                onSettings = {
+                    //TODO
+                },
+                onNewHabit = {
+                    navController.navigate(NavRoutes.Detail.route)
+                }
+            )
 
         }
         //endregion
@@ -74,6 +81,21 @@ fun NavManager(
                 },
                 onLogin = {
                     navController.popBackStack()
+                }
+            )
+
+        }
+        //endregion
+
+        // region Detail
+        composable(NavRoutes.Detail.route){
+            
+            DetailScreen(
+                onBack = {
+
+                },
+                onSave = {
+
                 }
             )
 

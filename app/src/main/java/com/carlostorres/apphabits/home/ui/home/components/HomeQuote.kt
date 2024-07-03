@@ -1,4 +1,4 @@
-package com.carlostorres.apphabits.home.ui.components
+package com.carlostorres.apphabits.home.ui.home.components
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image

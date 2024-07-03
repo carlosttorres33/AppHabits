@@ -1,4 +1,4 @@
-package com.carlostorres.apphabits.home.presentation
+package com.carlostorres.apphabits.home.presentation.home
 
 import com.carlostorres.apphabits.home.domain.model.Habit
 import java.time.ZonedDateTime

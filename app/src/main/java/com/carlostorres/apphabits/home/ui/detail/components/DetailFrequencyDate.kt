@@ -1,0 +1,47 @@
+package com.carlostorres.apphabits.home.ui.detail.components
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.unit.dp
+import com.carlostorres.apphabits.core.ui.HabitCheckBox
+import java.time.DayOfWeek
+
+@Composable
+fun DetailFrequencyDate(
+    modifier: Modifier = Modifier,
+    isChecked : Boolean,
+    onCheckedChange : () -> Unit,
+    date : DayOfWeek
+) {
+
+    Column(
+        modifier = modifier
+            .background(Color.White)
+            .padding(vertical = 8.dp, horizontal = 4.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+
+        Text(text = date.name.take(3))
+        
+        Spacer(modifier = Modifier.height(8.dp))
+        
+        HabitCheckBox(
+            isChecked = isChecked,
+            onCheckChanged = {
+                onCheckedChange()
+            },
+            modifier = Modifier.semantics { contentDescription = date.name }
+        )
+
+    }
+}

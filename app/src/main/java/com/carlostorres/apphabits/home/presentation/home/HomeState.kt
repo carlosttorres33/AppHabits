@@ -1,8 +1,6 @@
-package com.carlostorres.apphabits.home.presentation
+package com.carlostorres.apphabits.home.presentation.home
 
 import com.carlostorres.apphabits.home.domain.model.Habit
-import java.time.LocalDate
-import java.time.LocalTime
 import java.time.ZonedDateTime
 
 data class HomeState(

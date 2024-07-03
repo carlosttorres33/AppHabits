@@ -1,4 +1,4 @@
-package com.carlostorres.apphabits.home.presentation
+package com.carlostorres.apphabits.home.presentation.home
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
