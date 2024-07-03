@@ -1,13 +1,14 @@
 package com.carlostorres.apphabits.home.ui
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -28,8 +29,8 @@ import com.carlostorres.apphabits.R
 import com.carlostorres.apphabits.home.presentation.HomeEvents
 import com.carlostorres.apphabits.home.presentation.HomeViewModel
 import com.carlostorres.apphabits.home.ui.components.HomeDateSelecter
+import com.carlostorres.apphabits.home.ui.components.HomeHabit
 import com.carlostorres.apphabits.home.ui.components.HomeQuote
-import java.time.ZonedDateTime
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -62,41 +63,66 @@ fun HomeScreen(
         }
     ) { paddingValues ->
 
-        Column(
+        LazyColumn(
             modifier = Modifier
                 .padding(paddingValues)
-                .padding(20.dp),
-            verticalArrangement = Arrangement.spacedBy(19.dp)
+                .padding(horizontal = 20.dp),
+            contentPadding = PaddingValues(bottom = 20.dp)
         ) {
 
-            HomeQuote(
-                quote = "We first make our habits, and then our habits make us.",
-                author = "Anonymous",
-                image = R.drawable.onboarding1
-            )
+            item {
 
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-
-                Text(
-                    text = "HABITS".uppercase(),
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.tertiary,
-                    modifier = Modifier.padding(end = 16.dp)
+                HomeQuote(
+                    quote = "We first make our habits, and then our habits make us.",
+                    author = "Anonymous",
+                    image = R.drawable.onboarding1,
+                    modifier = Modifier.padding(bottom = 19.dp)
                 )
 
-                HomeDateSelecter(
-                    selectedDate = state.selectedDate,
-                    minDate = state.currentDate,
-                    onDateClick = { dateClicked ->
-                        viewModel.onEvent(HomeEvents.ChangeDate(dateClicked))
+            }
+
+            item {
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 13.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+
+                    Text(
+                        text = "HABITS".uppercase(),
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.tertiary,
+                        modifier = Modifier.padding(end = 16.dp)
+                    )
+
+                    HomeDateSelecter(
+                        selectedDate = state.selectedDate,
+                        minDate = state.currentDate,
+                        onDateClick = { dateClicked ->
+                            viewModel.onEvent(HomeEvents.ChangeDate(dateClicked))
+                        }
+                    )
+
+                }
+
+            }
+
+            items(state.habits){ habit ->
+
+                Spacer(modifier = Modifier.height(6.dp))
+                HomeHabit(
+                    habit = habit,
+                    selectedDay = state.selectedDate.toLocalDate() ,
+                    onCheckChanged = {
+                        viewModel.onEvent(HomeEvents.CompleteHabit(habit))
+                     },
+                    onHabitClick = {
+
                     }
                 )
-
             }
         }
     }

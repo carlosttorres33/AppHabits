@@ -24,7 +24,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.carlostorres.apphabits.R
 import com.carlostorres.apphabits.authentication.presentation.login.LoginViewModel
 import com.carlostorres.apphabits.authentication.ui.login.components.LoginForm
-import com.carlostorres.apphabits.core.presentation.HabitTitle
+import com.carlostorres.apphabits.core.ui.HabitTitle
 
 @Composable
 fun LoginScreen(

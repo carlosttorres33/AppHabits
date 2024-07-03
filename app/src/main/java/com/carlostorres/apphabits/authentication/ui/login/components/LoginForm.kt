@@ -31,9 +31,9 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import com.carlostorres.apphabits.authentication.presentation.login.LoginEvent
 import com.carlostorres.apphabits.authentication.presentation.login.LoginState
-import com.carlostorres.apphabits.core.HabitPasswordTextfield
-import com.carlostorres.apphabits.core.HabitTextfield
-import com.carlostorres.apphabits.core.presentation.HabitButton
+import com.carlostorres.apphabits.core.ui.HabitPasswordTextfield
+import com.carlostorres.apphabits.core.ui.HabitTextfield
+import com.carlostorres.apphabits.core.ui.HabitButton
 
 @Composable
 fun LoginForm(

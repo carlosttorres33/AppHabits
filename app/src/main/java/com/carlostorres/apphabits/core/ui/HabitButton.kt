@@ -1,8 +1,7 @@
-package com.carlostorres.apphabits.core.presentation
+package com.carlostorres.apphabits.core.ui
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.AlertDialogDefaults.shape
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text

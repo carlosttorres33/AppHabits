@@ -26,13 +26,12 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
-import com.carlostorres.apphabits.authentication.presentation.login.LoginEvent
 import com.carlostorres.apphabits.authentication.presentation.signup.SignUpEvents
 import com.carlostorres.apphabits.authentication.presentation.signup.SignUpState
-import com.carlostorres.apphabits.core.HabitPasswordTextfield
-import com.carlostorres.apphabits.core.HabitTextfield
-import com.carlostorres.apphabits.core.presentation.HabitButton
-import com.carlostorres.apphabits.core.presentation.HabitTitle
+import com.carlostorres.apphabits.core.ui.HabitPasswordTextfield
+import com.carlostorres.apphabits.core.ui.HabitTextfield
+import com.carlostorres.apphabits.core.ui.HabitButton
+import com.carlostorres.apphabits.core.ui.HabitTitle
 
 @Composable
 fun SignUpForm(
