@@ -23,7 +23,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.carlostorres.apphabits.R
+import com.carlostorres.apphabits.home.presentation.HomeEvents
+import com.carlostorres.apphabits.home.presentation.HomeViewModel
 import com.carlostorres.apphabits.home.ui.components.HomeDateSelecter
 import com.carlostorres.apphabits.home.ui.components.HomeQuote
 import java.time.ZonedDateTime
@@ -31,8 +34,10 @@ import java.time.ZonedDateTime
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
+    viewModel: HomeViewModel = hiltViewModel()
+) {
 
-){
+    val state = viewModel.state
 
     Scaffold(
         modifier = Modifier
@@ -45,7 +50,7 @@ fun HomeScreen(
                 navigationIcon = {
                     IconButton(
                         onClick = {}
-                    ){
+                    ) {
                         Icon(
                             imageVector = Icons.Default.Settings,
                             contentDescription = "Menu"
@@ -60,7 +65,8 @@ fun HomeScreen(
         Column(
             modifier = Modifier
                 .padding(paddingValues)
-                .padding(20.dp)
+                .padding(20.dp),
+            verticalArrangement = Arrangement.spacedBy(19.dp)
         ) {
 
             HomeQuote(
@@ -84,9 +90,11 @@ fun HomeScreen(
                 )
 
                 HomeDateSelecter(
-                    selectedDate = ZonedDateTime.now(),
-                    minDate = ZonedDateTime.now(),
-                    onDateClick = {}
+                    selectedDate = state.selectedDate,
+                    minDate = state.currentDate,
+                    onDateClick = { dateClicked ->
+                        viewModel.onEvent(HomeEvents.ChangeDate(dateClicked))
+                    }
                 )
 
             }
