@@ -2,8 +2,10 @@ package com.carlostorres.apphabits.ui.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import com.carlostorres.apphabits.authentication.ui.login.LoginScreen
 import com.carlostorres.apphabits.authentication.ui.signup.SignUpScreen
 import com.carlostorres.apphabits.home.ui.detail.DetailScreen
@@ -61,6 +63,9 @@ fun NavManager(
                 },
                 onNewHabit = {
                     navController.navigate(NavRoutes.Detail.route)
+                },
+                onEditHabit = { habitID ->
+                    navController.navigate(NavRoutes.Detail.route + "?habitID=$habitID")
                 }
             )
 
@@ -68,7 +73,9 @@ fun NavManager(
         //endregion
 
         // region SignUp
-        composable(NavRoutes.SignUp.route){
+        composable(
+            route = NavRoutes.SignUp.route
+        ){
 
             //SignUp
             SignUpScreen(
@@ -88,7 +95,15 @@ fun NavManager(
         //endregion
 
         // region Detail
-        composable(NavRoutes.Detail.route){
+        composable(
+            route = NavRoutes.Detail.route + "?habitID={habitID}",
+            arguments = listOf(
+                navArgument("habitID"){
+                    type = NavType.StringType
+                    nullable = true
+                }
+            )
+        ){
             
             DetailScreen(
                 onBack = {

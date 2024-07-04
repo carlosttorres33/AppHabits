@@ -6,8 +6,9 @@ import java.time.ZonedDateTime
 
 interface HomeRepo {
 
-    fun getAllHabitsForSelectedDate(date:ZonedDateTime) : Flow<List<Habit>>
+    fun getAllHabitsForSelectedDate(date : ZonedDateTime) : Flow<List<Habit>>
 
-    suspend fun upsertHabit(habit: Habit)
+    suspend fun upsertHabit(habit : Habit)
+    suspend fun getHabitById(id : String): Habit
 
 }

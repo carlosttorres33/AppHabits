@@ -41,6 +41,7 @@ fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
     onNewHabit : () -> Unit,
     onSettings : () -> Unit,
+    onEditHabit : (String) -> Unit
 ) {
 
     val state = viewModel.state
@@ -142,7 +143,7 @@ fun HomeScreen(
                         viewModel.onEvent(HomeEvents.CompleteHabit(habit))
                      },
                     onHabitClick = {
-
+                        onEditHabit(habit.id)
                     }
                 )
             }
