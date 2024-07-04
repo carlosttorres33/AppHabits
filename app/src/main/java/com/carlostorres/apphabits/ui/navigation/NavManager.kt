@@ -92,10 +92,10 @@ fun NavManager(
             
             DetailScreen(
                 onBack = {
-
+                    navController.popBackStack()
                 },
                 onSave = {
-
+                    navController.popBackStack()
                 }
             )
 

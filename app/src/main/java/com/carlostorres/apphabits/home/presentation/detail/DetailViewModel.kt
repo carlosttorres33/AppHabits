@@ -19,10 +19,17 @@ class DetailViewModel @Inject constructor(
 
         when(event){
 
-            is DetailEvents.FrequencyChanged -> TODO()
+            is DetailEvents.FrequencyChanged -> {
+                val frequency = if(state.frequency.contains(event.dayOfWeek)){
+                    state.frequency - event.dayOfWeek
+                } else {
+                    state.frequency + event.dayOfWeek
+                }
+                state = state.copy(frequency = frequency)
+            }
             DetailEvents.HabitSaved -> TODO()
-            is DetailEvents.ReminderChanged -> TODO()
-            is DetailEvents.TitleChanged -> TODO()
+            is DetailEvents.ReminderChanged -> state = state.copy(reminder = event.time)
+            is DetailEvents.TitleChanged -> state = state.copy(habitTitle = event.title)
 
         }
     }
