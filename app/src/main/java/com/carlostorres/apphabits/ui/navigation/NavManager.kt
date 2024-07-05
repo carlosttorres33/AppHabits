@@ -59,7 +59,7 @@ fun NavManager(
             //Home
             HomeScreen(
                 onSettings = {
-                    //TODO
+
                 },
                 onNewHabit = {
                     navController.navigate(NavRoutes.Detail.route)

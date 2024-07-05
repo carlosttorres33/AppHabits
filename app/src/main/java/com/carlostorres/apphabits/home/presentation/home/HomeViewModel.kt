@@ -20,7 +20,7 @@ class HomeViewModel @Inject constructor(
         private set
 
     init {
-        gethbaits()
+        getHabits()
     }
 
     fun onEvent(event : HomeEvents){
@@ -28,7 +28,7 @@ class HomeViewModel @Inject constructor(
         when(event){
             is HomeEvents.ChangeDate -> {
                 state = state.copy(selectedDate = event.date)
-                gethbaits()
+                getHabits()
             }
             is HomeEvents.CompleteHabit ->{
                 viewModelScope.launch {
@@ -36,10 +36,9 @@ class HomeViewModel @Inject constructor(
                 }
             }
         }
-
     }
 
-    private fun gethbaits(){
+    private fun getHabits(){
         viewModelScope.launch {
             useCases.getAllHabitsForDatesUseCase(state.selectedDate).collectLatest { habitsListFlow ->
                 state = state.copy(
