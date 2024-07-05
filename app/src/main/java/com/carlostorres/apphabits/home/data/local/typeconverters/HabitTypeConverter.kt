@@ -15,28 +15,28 @@ class HabitTypeConverter(
     @TypeConverter
     fun fromFrequency(days : List<Int>) : String {
 
-        return joinIntoString(days)!!
+        return joinIntoString(days) ?: ""
 
     }
 
     @TypeConverter
     fun toFrequency(value : String): List<Int>{
 
-        return splitToIntList(value)!!
+        return splitToIntList(value) ?: emptyList()
 
     }
 
     @TypeConverter
     fun fromCompletedDates(days : List<Long>) : String {
 
-        return joinIntoString(days)!!
+        return joinIntoString(days) ?: ""
 
     }
 
     @TypeConverter
     fun toCompletedDates(value : String): List<Long>{
 
-        return splitToLongList(value)!!
+        return splitToLongList(value) ?: emptyList()
 
     }
 

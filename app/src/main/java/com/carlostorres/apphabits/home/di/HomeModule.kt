@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.carlostorres.apphabits.home.data.local.HabitDao
 import com.carlostorres.apphabits.home.data.local.HabitDatabase
+import com.carlostorres.apphabits.home.data.local.typeconverters.HabitTypeConverter
 import com.carlostorres.apphabits.home.data.repository.HomeRepoImpl
 import com.carlostorres.apphabits.home.domain.detail.usecases.DetailUseCases
 import com.carlostorres.apphabits.home.domain.detail.usecases.GetHabitByIdUseCase
@@ -43,7 +44,7 @@ object HomeModule {
             klass = HabitDatabase::class.java,
             name = "habits_db"
         )
-        .addTypeConverter(moshi)
+        .addTypeConverter(HabitTypeConverter(moshi))
         .build()
         .habitDao()
 
