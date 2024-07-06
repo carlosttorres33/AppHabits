@@ -2,11 +2,13 @@ package com.carlostorres.apphabits.home.di
 
 import android.content.Context
 import androidx.room.Room
+import com.carlostorres.apphabits.home.data.alarm.AlarmHandlerImpl
 import com.carlostorres.apphabits.home.data.local.HabitDao
 import com.carlostorres.apphabits.home.data.local.HabitDatabase
 import com.carlostorres.apphabits.home.data.local.typeconverters.HabitTypeConverter
 import com.carlostorres.apphabits.home.data.remote.HomeApi
 import com.carlostorres.apphabits.home.data.repository.HomeRepoImpl
+import com.carlostorres.apphabits.home.domain.alarm.AlarmHandler
 import com.carlostorres.apphabits.home.domain.detail.usecases.DetailUseCases
 import com.carlostorres.apphabits.home.domain.detail.usecases.GetHabitByIdUseCase
 import com.carlostorres.apphabits.home.domain.detail.usecases.InsertHabitUseCase
@@ -34,22 +36,15 @@ object HomeModule {
 
     @Singleton
     @Provides
-    fun provideMoshi():Moshi{
-        return Moshi.Builder().build()
-    }
-
-    @Singleton
-    @Provides
     fun provideHabitDao(
-        @ApplicationContext context: Context,
-        moshi : Moshi
+        @ApplicationContext context: Context
     ) : HabitDao = Room
         .databaseBuilder(
             context = context,
             klass = HabitDatabase::class.java,
             name = "habits_db"
         )
-        .addTypeConverter(HabitTypeConverter(moshi))
+        .addTypeConverter(HabitTypeConverter())
         .build()
         .habitDao()
 
@@ -57,8 +52,9 @@ object HomeModule {
     @Provides
     fun provideHomeRepo(
         dao: HabitDao,
-        api : HomeApi
-    ) : HomeRepo = HomeRepoImpl(dao, api)
+        api : HomeApi,
+        alarmHandler: AlarmHandler
+    ) : HomeRepo = HomeRepoImpl(dao, api, alarmHandler)
 
     @Provides
     @Singleton
@@ -97,6 +93,14 @@ object HomeModule {
             .client(okHttpClient)
             .addConverterFactory(MoshiConverterFactory.create())
             .build().create(HomeApi::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideAlarmHandler(
+        @ApplicationContext context: Context
+    ) : AlarmHandler{
+        return AlarmHandlerImpl(context)
     }
 
 }

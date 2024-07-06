@@ -7,6 +7,7 @@ import com.carlostorres.apphabits.home.data.mappers.toDto
 import com.carlostorres.apphabits.home.data.mappers.toEntity
 import com.carlostorres.apphabits.home.data.remote.HomeApi
 import com.carlostorres.apphabits.home.data.remote.util.resultOf
+import com.carlostorres.apphabits.home.domain.alarm.AlarmHandler
 import com.carlostorres.apphabits.home.domain.model.Habit
 import com.carlostorres.apphabits.home.repository.HomeRepo
 import kotlinx.coroutines.flow.Flow
@@ -18,7 +19,8 @@ import java.time.ZonedDateTime
 
 class HomeRepoImpl(
     private val dao: HabitDao,
-    private val api: HomeApi
+    private val api: HomeApi,
+    private val alarmHandler: AlarmHandler
 ) : HomeRepo {
 
     override fun getAllHabitsForSelectedDate(date: ZonedDateTime): Flow<List<Habit>> {
@@ -52,6 +54,9 @@ class HomeRepoImpl(
     }
 
     override suspend fun upsertHabit(habit: Habit) {
+
+        handleAlarm(habit)
+
         dao.upsertHabit(habit.toEntity())
         resultOf {
             api.insertHabit(habit.toDto())
@@ -60,12 +65,27 @@ class HomeRepoImpl(
         }
     }
 
-    suspend fun upsertHabits(habits: List<Habit>) {
-        dao.upsertHabits(
-            habitEntities = habits.map { singleHabit ->
-                singleHabit.toEntity()
-            }
-        )
+    private suspend fun upsertHabits(habits: List<Habit>) {
+         habits.forEach{
+             handleAlarm(it)
+             dao.upsertHabit(it.toEntity())
+         }
+    }
+
+    private suspend fun handleAlarm(habit: Habit){
+
+        try {
+
+            val previus = dao.getHabitById(habit.id)
+
+            alarmHandler.cancel(previus.toDomain())
+
+        }catch (e: Exception){
+            //TODO: handle error
+        }
+
+        alarmHandler.setRecurringAlarm(habit)
+
     }
 
     override suspend fun getHabitById(id: String): Habit {

@@ -8,9 +8,7 @@ import androidx.room.util.splitToIntList
 import com.squareup.moshi.Moshi
 
 @ProvidedTypeConverter
-class HabitTypeConverter(
-    private val moshi : Moshi
-) {
+class HabitTypeConverter() {
 
     @TypeConverter
     fun fromFrequency(days : List<Int>) : String {
