@@ -2,6 +2,7 @@ package com.carlostorres.apphabits.home.di
 
 import android.content.Context
 import androidx.room.Room
+import androidx.work.WorkManager
 import com.carlostorres.apphabits.home.data.alarm.AlarmHandlerImpl
 import com.carlostorres.apphabits.home.data.local.HabitDao
 import com.carlostorres.apphabits.home.data.local.HabitDatabase
@@ -15,6 +16,7 @@ import com.carlostorres.apphabits.home.domain.detail.usecases.InsertHabitUseCase
 import com.carlostorres.apphabits.home.domain.home.usecase.CompleteHabitUseCase
 import com.carlostorres.apphabits.home.domain.home.usecase.GetAllHabitsForDatesUseCase
 import com.carlostorres.apphabits.home.domain.home.usecase.HomeUseCases
+import com.carlostorres.apphabits.home.domain.home.usecase.SyncHabitUseCase
 import com.carlostorres.apphabits.home.domain.model.Habit
 import com.carlostorres.apphabits.home.repository.HomeRepo
 import com.squareup.moshi.Moshi
@@ -44,6 +46,7 @@ object HomeModule {
             klass = HabitDatabase::class.java,
             name = "habits_db"
         )
+        .fallbackToDestructiveMigration()
         .addTypeConverter(HabitTypeConverter())
         .build()
         .habitDao()
@@ -53,8 +56,17 @@ object HomeModule {
     fun provideHomeRepo(
         dao: HabitDao,
         api : HomeApi,
-        alarmHandler: AlarmHandler
-    ) : HomeRepo = HomeRepoImpl(dao, api, alarmHandler)
+        alarmHandler: AlarmHandler,
+        workManager: WorkManager
+    ) : HomeRepo = HomeRepoImpl(dao, api, alarmHandler, workManager)
+
+    @Singleton
+    @Provides
+    fun provideWorkManager(
+        @ApplicationContext context: Context
+    ) : WorkManager{
+        return WorkManager.getInstance(context)
+    }
 
     @Provides
     @Singleton
@@ -62,7 +74,8 @@ object HomeModule {
         repo : HomeRepo
     ) = HomeUseCases(
         completeHabitUseCase = CompleteHabitUseCase(repo),
-        getAllHabitsForDatesUseCase = GetAllHabitsForDatesUseCase(repo)
+        getAllHabitsForDatesUseCase = GetAllHabitsForDatesUseCase(repo),
+        syncHabitUseCase = SyncHabitUseCase(repo)
     )
 
     @Provides

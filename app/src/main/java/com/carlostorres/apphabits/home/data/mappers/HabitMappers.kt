@@ -4,6 +4,7 @@ import com.carlostorres.apphabits.home.data.extensions.toStartOfDSateTimestamp
 import com.carlostorres.apphabits.home.data.extensions.toTimeStamp
 import com.carlostorres.apphabits.home.data.extensions.toZonedDateTime
 import com.carlostorres.apphabits.home.data.local.entity.HabitEntity
+import com.carlostorres.apphabits.home.data.local.entity.HabitSyncEntity
 import com.carlostorres.apphabits.home.data.remote.dto.HabitDto
 import com.carlostorres.apphabits.home.data.remote.dto.HabitResponse
 import com.carlostorres.apphabits.home.domain.model.Habit
@@ -81,4 +82,8 @@ fun Habit.toDto() : HabitResponse{
 
     return mapOf(id to dto)
 
+}
+
+fun Habit.toSyncEntity() : HabitSyncEntity{
+    return HabitSyncEntity(this.id)
 }

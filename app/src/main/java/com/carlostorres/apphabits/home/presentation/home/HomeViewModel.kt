@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.carlostorres.apphabits.home.domain.home.usecase.HomeUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -21,6 +22,9 @@ class HomeViewModel @Inject constructor(
 
     init {
         getHabits()
+        viewModelScope.launch(Dispatchers.IO) {
+            useCases.syncHabitUseCase()
+        }
     }
 
     fun onEvent(event : HomeEvents){

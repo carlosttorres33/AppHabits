@@ -1,9 +1,17 @@
 package com.carlostorres.apphabits
 
 import android.app.Application
+import androidx.hilt.work.HiltWorkerFactory
+import androidx.work.Configuration
 import dagger.hilt.android.HiltAndroidApp
-import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
 
 @HiltAndroidApp
-class HabitsApplication : Application() {
+class HabitsApplication : Application(), Configuration.Provider {
+    @Inject
+    lateinit var workerFactory: HiltWorkerFactory
+
+    override fun getWorkManagerConfiguration() = Configuration.Builder().setWorkerFactory(workerFactory).build()
+
+
 }
