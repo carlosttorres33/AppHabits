@@ -20,7 +20,7 @@ interface HabitDao {
     @Query("SELECT * FROM HabitEntity WHERE id = :id")
     suspend fun getHabitById(id : String): HabitEntity
 
-    @Query("SELECT * FROM HabitEntity WHERE startDate <= :date")
+    @Query("SELECT * FROM HabitEntity WHERE startDate <= :date ORDER BY id ASC")
     fun getAllHabitsForSelectedDate(date : Long): Flow<List<HabitEntity>>
 
     @Query("SELECT * FROM HabitEntity")
