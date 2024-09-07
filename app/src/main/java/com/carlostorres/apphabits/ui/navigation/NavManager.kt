@@ -11,11 +11,13 @@ import com.carlostorres.apphabits.authentication.ui.signup.SignUpScreen
 import com.carlostorres.apphabits.home.ui.detail.DetailScreen
 import com.carlostorres.apphabits.home.ui.home.HomeScreen
 import com.carlostorres.apphabits.onboarding.ui.OnboardingScreen
+import com.carlostorres.apphabits.settings.ui.SettingsScreen
 
 @Composable
 fun NavManager(
     navController: NavHostController,
-    startDestination: NavRoutes
+    startDestination: NavRoutes,
+    logout: () -> Unit
 ){
 
     NavHost(
@@ -59,7 +61,7 @@ fun NavManager(
             //Home
             HomeScreen(
                 onSettings = {
-
+                    navController.navigate(NavRoutes.Settings.route)
                 },
                 onNewHabit = {
                     navController.navigate(NavRoutes.Detail.route)
@@ -113,6 +115,29 @@ fun NavManager(
                     navController.popBackStack()
                 }
             )
+
+        }
+        //endregion
+
+        // region Settings
+        composable(
+            route = NavRoutes.Settings.route
+        ){
+
+            SettingsScreen(
+                onBack = {
+                    navController.popBackStack()
+                },
+                onLogOut = {
+                    logout()
+                    navController.navigate(NavRoutes.Login.route){
+                        popUpTo(navController.graph.id){
+                            inclusive = true
+                        }
+                    }
+                }
+            )
+
 
         }
         //endregion
