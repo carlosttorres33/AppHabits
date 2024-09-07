@@ -29,4 +29,8 @@ class AuthenticationRepoImpl : AuthenticationRepo {
         return Firebase.auth.currentUser?.uid
     }
 
+    override suspend fun logout() {
+        Firebase.auth.signOut()
+    }
+
 }

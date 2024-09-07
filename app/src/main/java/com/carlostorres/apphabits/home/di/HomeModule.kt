@@ -2,17 +2,21 @@ package com.carlostorres.apphabits.home.di
 
 import android.content.Context
 import androidx.room.Room
+import androidx.work.WorkManager
+import com.carlostorres.apphabits.home.data.alarm.AlarmHandlerImpl
 import com.carlostorres.apphabits.home.data.local.HabitDao
 import com.carlostorres.apphabits.home.data.local.HabitDatabase
 import com.carlostorres.apphabits.home.data.local.typeconverters.HabitTypeConverter
 import com.carlostorres.apphabits.home.data.remote.HomeApi
 import com.carlostorres.apphabits.home.data.repository.HomeRepoImpl
+import com.carlostorres.apphabits.home.domain.alarm.AlarmHandler
 import com.carlostorres.apphabits.home.domain.detail.usecases.DetailUseCases
 import com.carlostorres.apphabits.home.domain.detail.usecases.GetHabitByIdUseCase
 import com.carlostorres.apphabits.home.domain.detail.usecases.InsertHabitUseCase
 import com.carlostorres.apphabits.home.domain.home.usecase.CompleteHabitUseCase
 import com.carlostorres.apphabits.home.domain.home.usecase.GetAllHabitsForDatesUseCase
 import com.carlostorres.apphabits.home.domain.home.usecase.HomeUseCases
+import com.carlostorres.apphabits.home.domain.home.usecase.SyncHabitUseCase
 import com.carlostorres.apphabits.home.domain.model.Habit
 import com.carlostorres.apphabits.home.repository.HomeRepo
 import com.squareup.moshi.Moshi
@@ -34,22 +38,16 @@ object HomeModule {
 
     @Singleton
     @Provides
-    fun provideMoshi():Moshi{
-        return Moshi.Builder().build()
-    }
-
-    @Singleton
-    @Provides
     fun provideHabitDao(
-        @ApplicationContext context: Context,
-        moshi : Moshi
+        @ApplicationContext context: Context
     ) : HabitDao = Room
         .databaseBuilder(
             context = context,
             klass = HabitDatabase::class.java,
             name = "habits_db"
         )
-        .addTypeConverter(HabitTypeConverter(moshi))
+        .fallbackToDestructiveMigration()
+        .addTypeConverter(HabitTypeConverter())
         .build()
         .habitDao()
 
@@ -57,8 +55,18 @@ object HomeModule {
     @Provides
     fun provideHomeRepo(
         dao: HabitDao,
-        api : HomeApi
-    ) : HomeRepo = HomeRepoImpl(dao, api)
+        api : HomeApi,
+        alarmHandler: AlarmHandler,
+        workManager: WorkManager
+    ) : HomeRepo = HomeRepoImpl(dao, api, alarmHandler, workManager)
+
+    @Singleton
+    @Provides
+    fun provideWorkManager(
+        @ApplicationContext context: Context
+    ) : WorkManager{
+        return WorkManager.getInstance(context)
+    }
 
     @Provides
     @Singleton
@@ -66,7 +74,8 @@ object HomeModule {
         repo : HomeRepo
     ) = HomeUseCases(
         completeHabitUseCase = CompleteHabitUseCase(repo),
-        getAllHabitsForDatesUseCase = GetAllHabitsForDatesUseCase(repo)
+        getAllHabitsForDatesUseCase = GetAllHabitsForDatesUseCase(repo),
+        syncHabitUseCase = SyncHabitUseCase(repo)
     )
 
     @Provides
@@ -97,6 +106,14 @@ object HomeModule {
             .client(okHttpClient)
             .addConverterFactory(MoshiConverterFactory.create())
             .build().create(HomeApi::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideAlarmHandler(
+        @ApplicationContext context: Context
+    ) : AlarmHandler{
+        return AlarmHandlerImpl(context)
     }
 
 }

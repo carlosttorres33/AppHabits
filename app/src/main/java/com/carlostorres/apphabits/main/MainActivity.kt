@@ -36,7 +36,10 @@ class MainActivity : ComponentActivity() {
 
                     NavManager(
                         navController,
-                        getStartDestination()
+                        getStartDestination(),
+                        logout = {
+                            viewModel.logout()
+                        }
                     )
 
                 }
