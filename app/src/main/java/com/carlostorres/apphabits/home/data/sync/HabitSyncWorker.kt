@@ -12,6 +12,9 @@ import com.carlostorres.apphabits.home.data.remote.HomeApi
 import com.carlostorres.apphabits.home.data.remote.util.resultOf
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.supervisorScope
 import okhttp3.internal.wait
@@ -37,13 +40,11 @@ class HabitSyncWorker @AssistedInject constructor (
         return try {
             supervisorScope {
                 val jobs = items.map { habit ->
-                    launch {
+                    async {
                         runSync(habit)
                     }
                 }
-                jobs.forEach{
-                    it.join()
-                }
+                jobs.awaitAll()
             }
             Result.success()
         }catch (e:Exception){
